@@ -14,6 +14,7 @@ export class CheckoutComponent {
   cart: any[] = [];
   customerName: string = '';
   address: string = '';
+  amount: number = 0;
 
   ngOnInit(): void {
     this.http.get<any>('http://localhost:8085/api/products')
@@ -39,20 +40,22 @@ export class CheckoutComponent {
   }
 
   getTotal() {
-    return this.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    this.amount = this.cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    return this.amount;
   }
 
   checkout() {
     const payload = {
       customerName: this.customerName,
       address: this.address,
-      items: this.cart
+      items: this.cart,
+      amount: this.amount
     };
 
-    this.http.post<any>('http://localhost:8085/api/payment/create', payload)
+    this.http.post<any>('http://localhost:8085/api/payment/create/vnpay', payload)
     .subscribe(res => {
-      if (res && res.payUrl) {
-        window.location.href = res.payUrl;
+      if (res && res.redirectUrl) {
+        window.location.href = res.redirectUrl;
       }
     });
   }

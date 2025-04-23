@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ReturnComponent } from './return/return.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ReturnComponent
   ],
   imports: [
     BrowserModule,
