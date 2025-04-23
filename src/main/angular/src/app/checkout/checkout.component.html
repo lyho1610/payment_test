@@ -1,0 +1,35 @@
+<div class="container mt-4">
+    <h2 class="text-primary mb-3">🛍️ Danh sách sản phẩm</h2>
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let product of products">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">{{product.price | number}}₫</p>
+            <button class="btn btn-success btn-sm" (click)="addToCart(product)">+ Thêm vào giỏ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <h3 class="text-secondary mt-4">🛒 Giỏ hàng</h3>
+    <ul class="list-group">
+      <li *ngFor="let item of cart" class="list-group-item d-flex justify-content-between align-items-center">
+        {{item.name}} x {{item.quantity}}
+        <span>{{item.price * item.quantity | number}}₫</span>
+      </li>
+    </ul>
+    <p class="mt-2 fw-bold">Tổng cộng: {{getTotal() | number}}₫</p>
+  
+    <h3 class="text-secondary mt-4">📋 Thông tin khách hàng</h3>
+    <form (ngSubmit)="checkout()" class="mt-2">
+      <div class="mb-2">
+        <input class="form-control" [(ngModel)]="customerName" name="name" placeholder="Tên khách hàng" required />
+      </div>
+      <div class="mb-2">
+        <input class="form-control" [(ngModel)]="address" name="address" placeholder="Địa chỉ giao hàng" required />
+      </div>
+      <button type="submit" class="btn btn-primary">✅ Thanh toán</button>
+    </form>
+  </div>
+  
