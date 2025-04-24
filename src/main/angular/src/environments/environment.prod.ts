@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8085/api'
+  apiUrl: 'https://paymenttest-production-858f.up.railway.app/api'
 };
