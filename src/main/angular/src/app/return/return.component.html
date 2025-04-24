@@ -1,6 +1,21 @@
 <div class="return-container">
-    <h2>Kết quả thanh toán</h2>
-    <p>{{ paymentStatus }}</p>
-    <p *ngIf="txnRef">Mã giao dịch: {{ txnRef }}</p>
+    <div class="result-card" [ngClass]="paymentStatus === 'Thanh toán thành công 🎉' ? 'success' : 'fail'">
+      <h2>Kết quả thanh toán</h2>
+      <p class="status">{{ paymentStatus }}</p>
+      
+      <ng-container *ngIf="txnRef">
+        <p><strong>Mã giao dịch:</strong> {{ txnRef }}</p>
+      </ng-container>
+  
+      <ng-container *ngIf="amount">
+        <p><strong>Số tiền:</strong> {{ amount | number }}₫</p>
+      </ng-container>
+  
+      <ng-container *ngIf="bankCode">
+        <p><strong>Ngân hàng:</strong> {{ bankCode }}</p>
+      </ng-container>
+  
+      <button routerLink="/" class="back-btn">Quay lại giỏ hàng</button>
+    </div>
 </div>
   

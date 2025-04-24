@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -10,6 +11,7 @@ import { Product } from '../models/product.model';
 
 export class CheckoutComponent {
 
+  apiUrl = environment.apiUrl;
   products: Product[] = [];
   cart: any[] = [];
   customerName: string = '';
@@ -17,7 +19,7 @@ export class CheckoutComponent {
   amount: number = 0;
 
   ngOnInit(): void {
-    this.http.get<any>('http://localhost:8085/api/products')
+    this.http.get<any>(`${this.apiUrl}/products`)
       .subscribe(response => {
         if (response.status === 200) {
           this.products = response.data;  // Lấy dữ liệu sản phẩm từ response
@@ -52,7 +54,7 @@ export class CheckoutComponent {
       amount: this.amount
     };
 
-    this.http.post<any>('http://localhost:8085/api/payment/create/vnpay', payload)
+    this.http.post<any>(`${this.apiUrl}/payment/create/vnpay`, payload)
     .subscribe(res => {
       if (res && res.redirectUrl) {
         window.location.href = res.redirectUrl;

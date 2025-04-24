@@ -1,0 +1,151 @@
+/* Cải tiến container */
+.container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 32px;
+    background-color: #f9f9f9; /* Màu nền sáng */
+    border-radius: 20px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Tiêu đề */
+  h2, h3 {
+    font-weight: 600;
+    color: #2d3e50; /* Màu chữ đậm cho tiêu đề */
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #5a6b77; /* Màu trung tính cho subtitle */
+  }
+  
+  /* Danh sách sản phẩm */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng hover */
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333; /* Màu sắc đậm hơn */
+  }
+  
+  .card-text {
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  .btn-success {
+    padding: 8px 14px;
+    font-size: 1rem;
+    border-radius: 25px;
+    background-color: #28a745;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+  }
+  
+  /* Giỏ hàng */
+  .list-group-item {
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .list-group-item span {
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  /* Thông tin khách hàng */
+  input.form-control {
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  input.form-control:focus {
+    border-color: #28a745; /* Đổi màu border khi focus */
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+  }
+  
+  /* Nút thanh toán */
+  .btn-primary {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #007bff;
+    border: none;
+    border-radius: 25px;
+    transition: background-color 0.3s, transform 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-4px);
+  }
+  
+  /* Cải tiến tổng cộng */
+  .mt-2.fw-bold {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 700;
+  }
+  
+  /* Hiệu ứng loading khi checkout */
+  .checkout-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #28a745;
+  }
+  
+  /* Thiết kế responsive cho mobile */
+  @media (max-width: 768px) {
+    .container {
+      padding: 16px;
+    }
+  
+    .card-title {
+      font-size: 1.1rem;
+    }
+  
+    .btn-primary, .btn-success {
+      width: 100%;
+      padding: 12px;
+    }
+  }
+  
