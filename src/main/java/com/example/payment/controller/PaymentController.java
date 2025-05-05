@@ -89,62 +89,69 @@ public class PaymentController {
 
     // VN-PAY
     @PostMapping("/create/vnpay")
-    public ResponseEntity<?> createVNPayPayment(@RequestBody OrderRequest request, HttpServletRequest httpServletRequest) throws UnsupportedEncodingException {
-        String vnp_Version = "2.1.0";
-        String vnp_Command = "pay";
-        String vnp_TmnCode = "I44T3L90"; // <-- từ email VNPay
-        String vnp_HashSecret = "ET2RHUCFRKUX1WX5WER3YIE1A5M8NP9Z"; // <-- từ email VNPay
-        String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        String vnp_ReturnUrl = "https://payment-test-nine.vercel.app/return"; // frontend return
-//        String vnp_ReturnUrl = "http://localhost:4200/return"; // frontend return
-//        String vnp_IpnUrl = "https://paymenttest-production-8156.up.railway.app/api/payment/notify"; // URL xử lý IPN trên server thực tế
+    public ResponseEntity<?> createVNPayPayment(@RequestBody OrderRequest request, HttpServletRequest httpServletRequest) {
+        try {
+            String vnp_Version = "2.1.0";
+            String vnp_Command = "pay";
+            String vnp_TmnCode = "I44T3L90"; // <-- từ email VNPay
+            String vnp_HashSecret = "ET2RHUCFRKUX1WX5WER3YIE1A5M8NP9Z"; // <-- từ email VNPay
+            String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+            String vnp_ReturnUrl = "https://payment-test-nine.vercel.app/return"; // frontend return
+//            String vnp_ReturnUrl = "http://localhost:4200/return"; // frontend return
+            String vnp_IpnUrl = "https://paymenttest-production-8156.up.railway.app/api/payment/notify"; // URL xử lý IPN trên server thực tế
 
-        String orderId = UUID.randomUUID().toString().substring(0, 8);
-        String vnp_OrderInfo = "Thanh toan don hang " + orderId;
-        String vnp_OrderType = "other";
-        String vnp_Amount = String.valueOf(request.getAmount() * 100); // Nhân 100 theo yêu cầu
-        String vnp_Locale = "vn";
-        String vnp_CurrCode = "VND";
-        String vnp_IpAddr = httpServletRequest.getRemoteAddr();
-        String vnp_CreateDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String orderId = UUID.randomUUID().toString().substring(0, 8);
+            String vnp_OrderInfo = "Thanh toan don hang " + orderId;
+            String vnp_OrderType = "other";
+            String vnp_Amount = String.valueOf(request.getAmount() * 100); // Nhân 100 theo yêu cầu
+            String vnp_Locale = "vn";
+            String vnp_CurrCode = "VND";
+            String vnp_IpAddr = httpServletRequest.getRemoteAddr();
+            String vnp_CreateDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
-        Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", vnp_Version);
-        vnp_Params.put("vnp_Command", vnp_Command);
-        vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", vnp_Amount);
-        vnp_Params.put("vnp_CurrCode", vnp_CurrCode);
-        vnp_Params.put("vnp_TxnRef", orderId);
-        vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
-        vnp_Params.put("vnp_OrderType", vnp_OrderType);
-        vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl);
-//        vnp_Params.put("vnp_IpnUrl", vnp_IpnUrl); // <-- thêm vào params gửi đi
-        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
-        vnp_Params.put("vnp_Locale", vnp_Locale);
-        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+            Map<String, String> vnp_Params = new HashMap<>();
+            vnp_Params.put("vnp_Version", vnp_Version);
+            vnp_Params.put("vnp_Command", vnp_Command);
+            vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+            vnp_Params.put("vnp_Amount", vnp_Amount);
+            vnp_Params.put("vnp_CurrCode", vnp_CurrCode);
+            vnp_Params.put("vnp_TxnRef", orderId);
+            vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
+            vnp_Params.put("vnp_OrderType", vnp_OrderType);
+            vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl);
+            vnp_Params.put("vnp_IpnUrl", vnp_IpnUrl); // <-- thêm vào params gửi đi
+            vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+            vnp_Params.put("vnp_Locale", vnp_Locale);
+            vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
-        // Sắp xếp theo thứ tự alphabet
-        List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
-        Collections.sort(fieldNames);
-        StringBuilder hashData = new StringBuilder();
-        StringBuilder query = new StringBuilder();
-        for (String fieldName : fieldNames) {
-            String value = vnp_Params.get(fieldName);
-            if ((value != null) && (!value.isEmpty())) {
-                hashData.append(fieldName).append('=').append(URLEncoder.encode(value, StandardCharsets.US_ASCII));
-                query.append(fieldName).append('=').append(URLEncoder.encode(value, StandardCharsets.US_ASCII));
-                if (!fieldName.equals(fieldNames.get(fieldNames.size() - 1))) {
-                    hashData.append('&');
-                    query.append('&');
+            // Sắp xếp theo thứ tự alphabet
+            List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
+            Collections.sort(fieldNames);
+            StringBuilder hashData = new StringBuilder();
+            StringBuilder query = new StringBuilder();
+            for (String fieldName : fieldNames) {
+                String value = vnp_Params.get(fieldName);
+                if ((value != null) && (!value.isEmpty())) {
+                    hashData.append(fieldName).append('=').append(URLEncoder.encode(value, StandardCharsets.US_ASCII));
+                    query.append(fieldName).append('=').append(URLEncoder.encode(value, StandardCharsets.US_ASCII));
+                    if (!fieldName.equals(fieldNames.get(fieldNames.size() - 1))) {
+                        hashData.append('&');
+                        query.append('&');
+                    }
                 }
             }
+
+            String secureHash = hmacSHA512(vnp_HashSecret, hashData.toString());
+            query.append("&vnp_SecureHash=").append(secureHash);
+
+            String paymentUrl = vnp_Url + "?" + query.toString();
+            System.out.println(">>> RedirectUrl successfully .........");
+            return ResponseEntity.ok(Collections.singletonMap("redirectUrl", paymentUrl));
+        } catch (Exception e) {
+            System.out.println("❌ Lỗi xảy ra tại paymentNotify: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace(); // vẫn giữ lại để log stack trace đầy đủ nếu cần
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi server: " + e.getMessage());
         }
-
-        String secureHash = hmacSHA512(vnp_HashSecret, hashData.toString());
-        query.append("&vnp_SecureHash=").append(secureHash);
-
-        String paymentUrl = vnp_Url + "?" + query.toString();
-        return ResponseEntity.ok(Collections.singletonMap("redirectUrl", paymentUrl));
     }
 
     public static String hmacSHA512(String key, String data) {
@@ -169,7 +176,16 @@ public class PaymentController {
         try {
             // Lấy các tham số từ request
             Map<String, String[]> params = request.getParameterMap();
-            String secureHash = params.get("vnp_SecureHash")[0]; // Chữ ký từ VNPay
+            // Log tất cả tham số từ VNPay IPN
+            params.forEach((key, value) -> {
+                System.out.println(">>> Param: " + key + " = " + Arrays.toString(value));
+            });
+            String[] secureHashArr = params.get("vnp_SecureHash");
+            if (secureHashArr == null || secureHashArr.length == 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Thiếu vnp_SecureHash");
+            }
+            String secureHash = secureHashArr[0]; // Chữ ký từ VNPay
+            System.out.println(">>> SecureHash: " + secureHash);
             String computedSecureHash = computeSecureHash(params); // Tính lại chữ ký
 
             // Kiểm tra chữ ký
