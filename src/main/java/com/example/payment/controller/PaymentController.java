@@ -149,7 +149,7 @@ public class PaymentController {
             return ResponseEntity.ok(Collections.singletonMap("redirectUrl", paymentUrl));
         } catch (Exception e) {
             System.out.println("❌ Lỗi xảy ra tại paymentNotify: " + e.getClass().getName() + " - " + e.getMessage());
-            e.printStackTrace(); // vẫn giữ lại để log stack trace đầy đủ nếu cần
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi server: " + e.getMessage());
         }
     }
