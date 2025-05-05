@@ -96,7 +96,8 @@ public class PaymentController {
         String vnp_HashSecret = "ET2RHUCFRKUX1WX5WER3YIE1A5M8NP9Z"; // <-- từ email VNPay
         String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         String vnp_ReturnUrl = "https://payment-test-nine.vercel.app/return"; // frontend return
-        String vnp_IpnUrl = "https://payment-test-nine.vercel.app/api/payment/notify"; // URL xử lý IPN trên server thực tế
+//        String vnp_ReturnUrl = "http://localhost:4200/return"; // frontend return
+        String vnp_IpnUrl = "https://paymenttest-production-8156.up.railway.app/api/payment/notify"; // URL xử lý IPN trên server thực tế
 
         String orderId = UUID.randomUUID().toString().substring(0, 8);
         String vnp_OrderInfo = "Thanh toan don hang " + orderId;
